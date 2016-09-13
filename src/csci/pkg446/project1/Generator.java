@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Mathew
+ * @author Mathew Gostnell
  */
 public class Generator {
     private int numPnts;
