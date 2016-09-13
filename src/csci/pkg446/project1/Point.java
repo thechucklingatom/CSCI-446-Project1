@@ -10,24 +10,33 @@ public class Point {
     private final double y;
     private Color c;
 
+    // color enumeration used with Point
     public enum Color {
         RED, BLUE, GREEN, YELLOW, COLORLESS;
     }
-
+    
+    /**
+     * Constructor for Point class
+     * @param x X coordinate for point between (0, 1) inclusive
+     * @param y Y coordinate for point between (0, 1) inclusive
+     */
     public Point(double x, double y) {
         this.x = x;
         this.y = y;
         this.c = Color.COLORLESS;
     }
-
+    
+    // get private var x
     public double x() {
         return this.x;
     }
 
+    // get private var y
     public double y() {
         return this.y;
     }
 
+    // get color as a string for class outside Point
     public String c() {
         switch (c) {
             case RED:
@@ -43,6 +52,7 @@ public class Point {
         }
     }
     
+    // set color as a Color for classes outside Point
     public void setColor(String color) {
         color = color.toLowerCase();
         switch (color) {
@@ -64,12 +74,9 @@ public class Point {
         }
     }
     
-    public boolean match(double x, double y) {
-        int check1 = Double.compare(this.x, x);
-        int check2 = Double.compare(this.y, y);
-        return check1 == 0 && check2 == 0;
-    }
+    
 
+    // print out Point color and coordinates
     public void print() {
         System.out.println(c() + "(" + x + ", " + y + ")");
     }
