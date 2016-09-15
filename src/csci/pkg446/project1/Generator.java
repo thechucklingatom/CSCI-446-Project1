@@ -1,6 +1,7 @@
 package csci.pkg446.project1;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 /**
@@ -32,9 +33,35 @@ public class Generator {
     
     private void generateEdges() {
         // while points are available
-        // pick a point X and find the closest point Y where Edge(X,Y) doesn't exist
-        // if Edge(X, Y) doesn't cross any other edger, create edge.  Repeat
-    }
+        // pick our current points.get(i) and look at all other possible edges
+        // sort the edges by length
+        // if we have a valid edge, insert edge into edges ArrayList
+        ArrayList<Edge> posEdges = new ArrayList<>();
+        for (Point p1 : points) {
+            for (Point p2 : points) {
+                if (p1 != p2) {
+                    posEdges.add(new Edge(p1, p2));
+                }
+            }
+            // sort edges array by length
+            Collections.sort(posEdges, Edge.getCompByLength());
+            posEdges.clear();
+            
+            boolean allClear;
+            for (Edge e1: posEdges) {
+                allClear = true;
+                for (Edge e2: edges) {
+                    if (isIntercept(e1, e2)) {
+                        allClear = false;
+                    }
+                }
+                if (allClear) {
+                    edges.add(e1);
+                }
+            }
+        }
+                
+    }    
 
     private void generatePoints() {
         while (points.size() < numPnts) {

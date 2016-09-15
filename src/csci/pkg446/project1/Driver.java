@@ -7,7 +7,7 @@ package csci.pkg446.project1;
  */
 public class Driver {
     public static void main(String[] args) {        
-        Generator g = new Generator(50);
+        Generator g = new Generator(6);
         
     }
 }
