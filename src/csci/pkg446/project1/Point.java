@@ -80,4 +80,9 @@ public class Point {
     public void print() {
         System.out.println(c() + "(" + x + ", " + y + ")");
     }
+    
+    @Override
+    public String toString(){
+        return c() + "(" + x + ", " + y + ")";
+    }
 }
