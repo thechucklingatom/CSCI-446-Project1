@@ -1,13 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package csci.pkg446.project1;
 
 /**
  *
- * @author thech_000
+ * @author thechucklingatom
  */
 public abstract class Backtracking extends Algorithm {
     public abstract Graph solveGraph(Graph graphToSolve);
