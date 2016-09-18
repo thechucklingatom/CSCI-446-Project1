@@ -2,6 +2,7 @@ package csci.pkg446.project1;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -14,6 +15,7 @@ public class Generator {
     private int numPnts;    // used for creating n points in Graph generation
     private ArrayList<Edge> edges;  // current list of edges of graph
     private ArrayList<Point> points;    // current list of points on graph
+    private Graph generatedGraph;
 
     public Generator(int numPnts) {
         this.numPnts = numPnts;
@@ -21,14 +23,16 @@ public class Generator {
         edges = new ArrayList<>();
         generatePoints();
         generateEdges();
+        createGraph();
     }
     
-    public void generateNewGraph(int numPnts) {
+    public Graph generateNewGraph(int numPnts) {
         this.numPnts = numPnts;
         edges.clear();
         points.clear();
         generatePoints();
         generateEdges();
+        return createGraph();
     }
     
     private void generateEdges() {
@@ -126,5 +130,14 @@ public class Generator {
 
         return minX <= p.x() && p.x() <= maxX && minY <= p.y() && p.y() <= maxY;
 
+    }
+    
+    private Graph createGraph(){
+        generatedGraph = new Graph((List)points, (List)edges);
+        return getGraph();
+    }
+    
+    public Graph getGraph(){
+        return generatedGraph;
     }
 }
