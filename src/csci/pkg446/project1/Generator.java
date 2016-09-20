@@ -41,7 +41,8 @@ public class Generator {
         // sort the edges by length
         // if we have a valid edge, insert edge into edges ArrayList
         ArrayList<Edge> posEdges = new ArrayList<>();
-        for (Point p1 : points) {
+        for (Point p1 : points) {            
+            posEdges.clear();
             for (Point p2 : points) {
                 if (p1 != p2) {
                     posEdges.add(new Edge(p1, p2));
@@ -49,7 +50,6 @@ public class Generator {
             }
             // sort edges array by length
             Collections.sort(posEdges, Edge.getCompByLength());
-            posEdges.clear();
             
             boolean allClear;
             for (Edge e1: posEdges) {
