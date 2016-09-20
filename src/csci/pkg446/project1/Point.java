@@ -1,6 +1,8 @@
 
 package csci.pkg446.project1;
 
+import java.util.Objects;
+
 /**
  *
  * @author Mathew Gostnell
@@ -84,5 +86,25 @@ public class Point {
     @Override
     public String toString(){
         return c() + "(" + x + ", " + y + ")";
+    }
+    
+    @Override
+    public boolean equals(Object o){
+        if(o instanceof Point){
+            if((((Point) o).x() == x && ((Point) o).y() == y) &&
+                    ((Point) o).c().equalsIgnoreCase(c.name())){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 71 * hash + (int) (Double.doubleToLongBits(this.x) ^ (Double.doubleToLongBits(this.x) >>> 32));
+        hash = 71 * hash + (int) (Double.doubleToLongBits(this.y) ^ (Double.doubleToLongBits(this.y) >>> 32));
+        hash = 71 * hash + Objects.hashCode(this.c);
+        return hash;
     }
 }
