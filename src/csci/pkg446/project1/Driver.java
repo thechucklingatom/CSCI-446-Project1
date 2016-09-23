@@ -16,8 +16,12 @@ public class Driver {
         ArrayList<Algorithm> algorithmList = new ArrayList();
         
         LocalSearch ls = new LocalSearch();
+        SimpleBacktracking sb = new SimpleBacktracking();
+        ForwardBacktracking fb = new ForwardBacktracking();
         
         algorithmList.add(ls);
+        algorithmList.add(sb);
+        algorithmList.add(fb);
         
         for(int i = 10; i < 100; i+=10){
             
@@ -25,7 +29,11 @@ public class Driver {
             System.out.println(toSolve.toString());
             for(Algorithm a : algorithmList){
                 Graph solution = a.SolveGraph(toSolve);
-                System.out.println("The solution graph is:\n" + solution.toString());
+                if(solution != null){
+                    System.out.println("The solution graph is:\n" + solution.toString());
+                } else {
+                    System.out.println("Coloring not Found.");
+                }
             }
             
         }
