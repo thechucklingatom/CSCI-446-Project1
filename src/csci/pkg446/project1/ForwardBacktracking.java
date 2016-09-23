@@ -31,11 +31,12 @@ public class ForwardBacktracking extends Backtracking{
         edges = g.getEdges();
         index = 0;
         initiateForward(3);
-        if (dfs(3) == null) {
+        Graph answer = dfs(3);
+        if (answer == null) {
             initiateForward(4);
             return dfs(4);
         }
-        return null;
+        return answer;
     }
 
 
