@@ -18,15 +18,17 @@ public class Driver {
         LocalSearch ls = new LocalSearch();
         SimpleBacktracking sb = new SimpleBacktracking();
         ForwardBacktracking fb = new ForwardBacktracking();
+        MinConflicts mc = new MinConflicts();
         
         algorithmList.add(ls);
         algorithmList.add(sb);
-        algorithmList.add(fb);
+        //algorithmList.add(fb);
+        algorithmList.add(mc);
         
         for(int i = 10; i < 100; i+=10){
             
             Graph toSolve = g.generateNewGraph(i);
-            System.out.println(toSolve.toString());
+            //System.out.println(toSolve.toString());
             for(Algorithm a : algorithmList){
                 System.out.println(a.toString());
                 Graph solution = a.SolveGraph(toSolve);
