@@ -63,4 +63,21 @@ public final class Graph implements Serializable{
         
         return toReturn;
     }
+    
+    public void setPoints(ArrayList<Point> points){
+        this.points = points;
+    }
+    
+    @Override
+    public String toString(){
+        String toReturn = "";
+        for(Point p : points){
+            toReturn += "Node/Point: " + p.toString() + "\n";
+            for(Edge e : getEdgesFromPoint(p)){
+                toReturn += "Edge: " + e.toString() + "\n";
+            }
+        }
+        
+        return toReturn;
+    }
 }

@@ -17,6 +17,10 @@ public class SimpleBacktracking extends Backtracking {
     private List<Edge> edges;
     private Graph g;
     private int index;
+    
+    public SimpleBacktracking(){
+        
+    }
 
     @Override
     public Graph SolveGraph(Graph graphToSolve) {
@@ -24,10 +28,11 @@ public class SimpleBacktracking extends Backtracking {
         points = g.getPoints();
         edges = g.getEdges();
         index = 0;
-        if (dfs(3) == null) {
+        Graph answer = dfs(3);
+        if (answer == null) {
             return dfs(4);
         }
-        return null;
+        return answer;
     }
 
     private Graph dfs(int numC) {

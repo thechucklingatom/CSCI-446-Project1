@@ -89,7 +89,7 @@ public class Generator {
         double xCor = (e2.intercept() - e1.intercept()) / (e1.slope() - e2.slope());
         double yCor = (xCor * e1.slope()) + e1.intercept();
         Point p = new Point(xCor, yCor);
-        p.print();
+        //p.print();
 
         // check to see if Point P is on line-segment e1 and e2
         return onLine(p, e1) && onLine(p, e2);
@@ -126,7 +126,7 @@ public class Generator {
         double minY = Math.min(e.start().y(), e.end().y());
         double maxY = Math.max(e.start().y(), e.end().y());
 
-        System.out.println("Boundary: (" + minX + ", " + maxX + "), (" + minY + ", " + maxY + ")");
+        //System.out.println("Boundary: (" + minX + ", " + maxX + "), (" + minY + ", " + maxY + ")");
 
         return minX <= p.x() && p.x() <= maxX && minY <= p.y() && p.y() <= maxY;
 
