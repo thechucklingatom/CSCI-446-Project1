@@ -47,10 +47,14 @@ public class MinConflicts extends Algorithm {
         Point curPoint;
         do {
             curPoint = points.get(index);
+            System.out.println("curPoint = " + curPoint);
             List<Edge> curEdges = findEdges(curPoint);
+            System.out.println(curEdges.size() + "Edges to/from curPoint");
             String minConflict = getConflictColor(curEdges);
+            System.out.println("\tMinimum Conflict Color Choice: " + minConflict);
             curPoint.setColor(minConflict);
             updateEdges(curPoint);
+            System.out.println("\tUpdate edge and point colors");
             if (validGraph()) {
                 System.out.println("\n\tTook " + curCount + " minConflict for n=" + points.size());
                 return new Graph(edges, points);
@@ -58,31 +62,30 @@ public class MinConflicts extends Algorithm {
             // not valid graph, update index and continue finding miniumum conflicts
             curCount++;
             index = ++index%points.size();
+            System.out.println("curCount:" + curCount + "\tRandom Index:" + index);
         } while (curCount < maxCount);
 
         curColors = 4; // now try 4 color solution
         points = randomColor(g);
         curCount = 0;
         do {   // attempt 4 color solution
-            // grab our current point from our list
             curPoint = points.get(index);
-            // get all edges with our current point
+            System.out.println("curPoint = " + curPoint);
             List<Edge> curEdges = findEdges(curPoint);
-            // find a color with the minimum number of conflicts at this Point
+            System.out.println(curEdges.size() + " Edges to/from curPoint");
             String minConflict = getConflictColor(curEdges);
-            // update our current Point color
+            System.out.println("\tMinimum Conflict Color Choice: " + minConflict);
             curPoint.setColor(minConflict);
-            // update our list of points color
-            // update all edges with the points colors
             updateEdges(curPoint);
-            // return valid graph if it exists
+            System.out.println("\tUpdate edge and point colors");
             if (validGraph()) {
                 System.out.println("\n\tTook " + curCount + " minConflict for n=" + points.size());
                 return new Graph(edges, points);
             }
             // not valid graph, update index and continue finding miniumum conflicts
-            index = ++index%points.size();
             curCount++;
+            index = ++index%points.size();
+            System.out.println("curCount:" + curCount + "\tRandom Index:" + index);
         } while (curCount < maxCount);
         return null;
     }
