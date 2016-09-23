@@ -37,14 +37,22 @@ public class LocalSearch extends Algorithm {
 
         graph = graphToSolve;
 
-        generatePopulation(50);
+        generatePopulation(10);
 
         while (!graphColored() && rounds < 1000) {
             runTournament();
             breed();
             rounds++;
         }
-
+        
+        if(graphColored()){
+            System.out.println("It took " + rounds + " rounds to find a match using"
+                    + " a genetic algorithm.");
+        }else{
+            System.out.println("genetic algorithm took the full " + rounds
+                    + " rounds without finding a solution.");
+        }
+        
         return graph;
     }
 
@@ -110,7 +118,7 @@ public class LocalSearch extends Algorithm {
 
         ArrayList<Chromosome> newPopulation = new ArrayList<>();
 
-        while (population.size() > 0) {
+        while (population.size() > 1) {
 
             int firstContender = rand.nextInt(population.size());
             Chromosome gladiator = population.get(firstContender);
@@ -125,6 +133,10 @@ public class LocalSearch extends Algorithm {
                 newPopulation.add(viking);
             }
         }
+        
+        if (population.size() == 1){
+            newPopulation.addAll(population);
+        }
 
         population = newPopulation;
     }
@@ -132,7 +144,7 @@ public class LocalSearch extends Algorithm {
     private void breed() {
         ArrayList<Chromosome> newPopulation = new ArrayList<>();
 
-        while (population.size() > 0) {
+        while (population.size() > 1) {
 
             int firstParent = rand.nextInt(population.size());
             Chromosome parent1 = population.get(firstParent);
@@ -143,6 +155,10 @@ public class LocalSearch extends Algorithm {
 
             List<Chromosome> family = crossover(parent1, parent2);
             newPopulation.addAll(family);
+        }
+        
+        if(population.size() == 1){
+            newPopulation.addAll(population);
         }
 
         population = newPopulation;

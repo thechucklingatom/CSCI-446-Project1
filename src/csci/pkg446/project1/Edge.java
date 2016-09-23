@@ -55,6 +55,11 @@ public class Edge {
     public void print() {
         System.out.printf("(%.4f, %.4f), (%.4f, %.4f)\t[%.4f]\n", start.x(), start.y(), end.x(), end.y(), length());
     }
+    
+    @Override
+    public String toString(){
+        return String.format("(%.4f, %.4f), (%.4f, %.4f)\t[%.4f]", start.x(), start.y(), end.x(), end.y(), length());
+    }
 
     public static Comparator<Edge> getCompByLength() {
         Comparator comp = (Comparator<Edge>) (Edge e1, Edge e2) -> Double.compare(e1.length(), e2.length());
