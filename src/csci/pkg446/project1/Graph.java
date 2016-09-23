@@ -40,7 +40,9 @@ public final class Graph implements Serializable{
     }
     
     public Point getNextPoint(){
-        index++;
+        if(index < points.size() - 1){
+            index++;
+        }
         return points.get(index);
     }
     

@@ -9,5 +9,9 @@ public class Driver {
     public static void main(String[] args) {        
         Generator g = new Generator(6);
         
+        LocalSearch ls = new LocalSearch();
+        
+        ls.SolveGraph(g.getGraph());
+        
     }
 }

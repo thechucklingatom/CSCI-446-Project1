@@ -133,7 +133,7 @@ public class Generator {
     }
     
     private Graph createGraph(){
-        generatedGraph = new Graph((List)points, (List)edges);
+        generatedGraph = new Graph((List)edges, (List)points);
         return getGraph();
     }
     
