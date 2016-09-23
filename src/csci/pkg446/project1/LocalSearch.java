@@ -39,10 +39,9 @@ public class LocalSearch extends Algorithm {
 
         generatePopulation(10);
 
-        while (!graphColored() && rounds < 1000) {
+        for(rounds = 0; !graphColored() && rounds < 1000; rounds++) {
             runTournament();
             breed();
-            rounds++;
         }
         
         if(graphColored()){
