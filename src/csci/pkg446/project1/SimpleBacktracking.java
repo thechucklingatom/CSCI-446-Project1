@@ -30,11 +30,6 @@ public class SimpleBacktracking extends Backtracking {
         return null;
     }
 
-    @Override
-    public Graph solveGraph(Graph graphToSolve) {
-        return null;
-    }
-
     private Graph dfs(int numC) {
         Point curPoint = g.getCurrentPoint();
         //if this iteration would cause an arrayoutofboundsexception, g.index++ == points.size
@@ -107,5 +102,4 @@ public class SimpleBacktracking extends Backtracking {
         }
         return true;
     }
-
 }
