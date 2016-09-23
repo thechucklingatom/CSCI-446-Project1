@@ -63,4 +63,8 @@ public final class Graph implements Serializable{
         
         return toReturn;
     }
+    
+    public void setPoints(ArrayList<Point> points){
+        this.points = points;
+    }
 }
