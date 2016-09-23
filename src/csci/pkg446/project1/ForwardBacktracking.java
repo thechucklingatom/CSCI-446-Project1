@@ -69,8 +69,6 @@ public class ForwardBacktracking extends Backtracking{
                             curPoint.setColor("COLORLESS");
                     }
                     
-                    editedNodes.push(index);
-                    
                     if (!confEdges(curPoint) && forwardCheck(editedNodes, i)) {
                         //using this method as an iterator
                         g.getNextPoint();
@@ -78,9 +76,9 @@ public class ForwardBacktracking extends Backtracking{
                         Graph answer = dfs(numC);
                         if (answer != null) {
                             return answer;
-                        }
-                        reverseStep(editedNodes);
+                        } 
                     }
+                    reverseStep(editedNodes);
                 }
             }
         }
@@ -140,7 +138,8 @@ public class ForwardBacktracking extends Backtracking{
         //assume we are doing a check when we HAVE ASSIGNED a point a new color
         Point curPoint = g.getCurrentPoint();
         List<Edge> tempEdges = g.getEdgesFromPoint(curPoint);
-        //------remove the other colors from curPoint's domain
+        isDone[index] = true;
+
         for(Edge curEdge : tempEdges){
             //makes sure we grab the correct point on the edge to edit
             Point otherCurPoint;
@@ -149,26 +148,52 @@ public class ForwardBacktracking extends Backtracking{
             } else {
                 otherCurPoint = curEdge.end();
             }
-            
             //grab the index of that otherCurPoint 'cause that's what we use
             int otherPointPos = points.indexOf(otherCurPoint);
-            //remove from the domain, put those onto the domainList stack
+            //catch if this point has already been assigned a color
+            if(isDone[otherPointPos]){
+            } else if(domainList[otherPointPos].contains(colorIndex)){
+                if(domainList[otherPointPos].size() - 1 == 0){
+                    return false;
+                }
+                //if we reach here, we are conflict free
+                domainList[otherPointPos].remove(colorIndex);
+                lastColor[otherPointPos].push(colorIndex);
+                editedNodes.push(otherPointPos);
+                //check if there's one option left
+                if(domainList[otherPointPos].size() == 1){
+                    //if so, assign that color and mark it as assigned
+                    switch (colorIndex) {
+                        case 0:
+                            curPoint.setColor("RED");
+                            break;
+                        case 1:
+                            curPoint.setColor("GREEN");
+                            break;
+                        case 2:
+                            curPoint.setColor("BLUE");
+                            break;
+                        case 3:
+                            curPoint.setColor("YELLOW");
+                            break;
+                        default:
+                            curPoint.setColor("COLORLESS");
+                    }
+                    isDone[index] = true;
+                }
+            }
         }
-        //this will shave values off of domains, check if any are 0 or 1,
-        //and react appropirately. Return false if we hit 0.
-        
-        //return false if we hit collisions
-        
         return true;
     }
-    //PROBLEMS: reversing the curPoint, multiple colors gone
+   
     private void reverseStep(Stack<Integer> stack){
         while(!stack.empty()){
             int i = stack.pop();
-            int color = lastColor[i].pop();
-            domainList[i].add(color);
             if(isDone[i]){
                 isDone[i] = false;
+            } else {
+                int color = lastColor[i].pop();
+                domainList[i].add(color);
             }
         }
     }
