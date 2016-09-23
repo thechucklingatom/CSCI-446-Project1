@@ -38,7 +38,7 @@ public class SimpleBacktracking extends Backtracking {
     private Graph dfs(int numC) {
         Point curPoint = g.getCurrentPoint();
         //if this iteration would cause an arrayoutofboundsexception, g.index++ == points.size
-        if (index + 1 == points.size()) {
+        if (index  == points.size()) {
             //must be seperate so we don't go into the else statement
             if(isSolved()){
                 return g;
