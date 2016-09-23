@@ -44,7 +44,7 @@ public class ForwardBacktracking extends Backtracking{
         Point curPoint = g.getCurrentPoint();
         Stack<Integer> editedNodes = new Stack();
         //if this iteration would cause an arrayoutofboundsexception, g.index++ == points.size
-        if (index + 1 == points.size()) {
+        if (index  == points.size()) {
             //must be seperate so we don't go into the else statement
             if(isSolved()){
                 return g;
@@ -70,7 +70,7 @@ public class ForwardBacktracking extends Backtracking{
                             curPoint.setColor("COLORLESS");
                     }
                     
-                    if (!confEdges(curPoint) && forwardCheck(editedNodes, i)) {
+                    if (confEdges(curPoint) && forwardCheck(editedNodes, i)) {
                         //using this method as an iterator
                         g.getNextPoint();
                         index++;

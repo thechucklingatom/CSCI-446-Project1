@@ -17,6 +17,8 @@ public class SimpleBacktracking extends Backtracking {
     private List<Edge> edges;
     private Graph g;
     private int index;
+    private int limiter;
+    private int comparisons;
     
     public SimpleBacktracking(){
         
@@ -30,15 +32,18 @@ public class SimpleBacktracking extends Backtracking {
         index = 0;
         Graph answer = dfs(3);
         if (answer == null) {
-            return dfs(4);
+            answer = dfs(4);
+            System.out.println("This answer took " + comparisons + " assignments.");
+            return answer;
         }
+        System.out.println("This answer took " + comparisons + " assignments.");
         return answer;
     }
 
     private Graph dfs(int numC) {
         Point curPoint = g.getCurrentPoint();
         //if this iteration would cause an arrayoutofboundsexception, g.index++ == points.size
-        if (index + 1 == points.size()) {
+        if (index  == points.size()) {
             //must be seperate so we don't go into the else statement
             if(isSolved()){
                 return g;
@@ -62,10 +67,12 @@ public class SimpleBacktracking extends Backtracking {
                     default:
                         curPoint.setColor("COLORLESS");
                 }
-                if (!confEdges(curPoint)) {
+                comparisons++;
+                if (confEdges(curPoint)) {
                     //using this method as an iterator
                     g.getNextPoint();
                     index++;
+                    limiter++;
                     Graph answer = dfs(numC);
                     if (answer != null) {
                         return answer;
