@@ -62,7 +62,7 @@ public class SimpleBacktracking extends Backtracking {
                     default:
                         curPoint.setColor("COLORLESS");
                 }
-                if (!confEdges(curPoint)) {
+                if (confEdges(curPoint)) {
                     //using this method as an iterator
                     g.getNextPoint();
                     index++;
