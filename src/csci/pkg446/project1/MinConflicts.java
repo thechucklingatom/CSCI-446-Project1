@@ -36,38 +36,29 @@ public class MinConflicts extends Algorithm {
         // will check graph with 50 starting comparisons (minConstraint 50 times)
         // this has been shown to solve most complex problems (like n-queens)
         Graph g = graphToSolve;
-        edges = g.getEdges();        
-        points = randomColor(g);        
+        edges = g.getEdges();
+        points = randomColor(g);
+        curColors = 3;
 
         // max number of mindecisions we will make
-        int maxCount = points.size() * points.size();
+        int maxCount = points.size() * points.size() * points.size();
         int curCount = 0;
         int index = 0;
         Point curPoint;
-        do {   // attempt 3 color solution
-            // grab our current point from our list
+        do {
             curPoint = points.get(index);
-            // get all edges with our current point
             List<Edge> curEdges = findEdges(curPoint);
-            // find a color with the minimum number of conflicts at this Point
             String minConflict = getConflictColor(curEdges);
-            // update our current Point color
             curPoint.setColor(minConflict);
-            // update our list of points color
-            points.set(index, curPoint);
-            // update all edges with the points colors
             updateEdges(curPoint);
-            // return valid graph if it exists
             if (validGraph()) {
-                System.out.println("Valid Solution with 3 colors:\n\n");
                 return new Graph(edges, points);
             }
             // not valid graph, update index and continue finding miniumum conflicts
             index = rng.nextInt(points.size());
             curCount++;
         } while (curCount < maxCount);
-        
-        System.out.println("Couldn't find 3-color solution.  Trying 4-color...");
+
         curColors = 4; // now try 4 color solution
         points = randomColor(g);
         curCount = 0;
@@ -81,19 +72,16 @@ public class MinConflicts extends Algorithm {
             // update our current Point color
             curPoint.setColor(minConflict);
             // update our list of points color
-            points.set(index, curPoint);
             // update all edges with the points colors
             updateEdges(curPoint);
             // return valid graph if it exists
             if (validGraph()) {
-                System.out.println("Valid Solution with 4 colors:\n\n");
                 return new Graph(edges, points);
             }
             // not valid graph, update index and continue finding miniumum conflicts
             index = rng.nextInt(points.size());
             curCount++;
         } while (curCount < maxCount);
-        System.out.println("No solution found.  Try again!");
         return null;
     }
 
@@ -113,11 +101,9 @@ public class MinConflicts extends Algorithm {
 
     private List<Edge> findEdges(Point p) {
         List<Edge> pairs = new ArrayList<>();
-        for (Edge e : this.edges) {
-            if (e.start().equals(p) || e.end().equals(p)) {
-                pairs.add(e);
-            }
-        }
+        this.edges.stream().filter((e) -> (e.start().equals(p) || e.end().equals(p))).forEach((e) -> {
+            pairs.add(e);
+        });
         return pairs;
     }
 
@@ -203,9 +189,11 @@ public class MinConflicts extends Algorithm {
                 case 3:
                     return "Yellow";
                 default:
+                    System.out.println(":::RETURNING NO COLOR:::");
                     return " ";
             }
         } else {
+            System.out.println(":::RETURNING NO COLOR:::");
             return " ";
         }
     }
