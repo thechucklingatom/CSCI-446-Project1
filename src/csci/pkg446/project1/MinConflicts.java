@@ -41,7 +41,7 @@ public class MinConflicts extends Algorithm {
         curColors = 3;
 
         // max number of mindecisions we will make
-        int maxCount = points.size() * points.size() * points.size();
+        int maxCount = 150000; //after n = 30 will maxCount too small to solve Graph
         int curCount = 0;
         int index = 0;
         Point curPoint;
@@ -52,11 +52,12 @@ public class MinConflicts extends Algorithm {
             curPoint.setColor(minConflict);
             updateEdges(curPoint);
             if (validGraph()) {
+                System.out.println("\n\tTook " + curCount + " minConflict for n=" + points.size());
                 return new Graph(edges, points);
             }
             // not valid graph, update index and continue finding miniumum conflicts
-            index = rng.nextInt(points.size());
             curCount++;
+            index = ++index%points.size();
         } while (curCount < maxCount);
 
         curColors = 4; // now try 4 color solution
@@ -76,10 +77,11 @@ public class MinConflicts extends Algorithm {
             updateEdges(curPoint);
             // return valid graph if it exists
             if (validGraph()) {
+                System.out.println("\n\tTook " + curCount + " minConflict for n=" + points.size());
                 return new Graph(edges, points);
             }
             // not valid graph, update index and continue finding miniumum conflicts
-            index = rng.nextInt(points.size());
+            index = ++index%points.size();
             curCount++;
         } while (curCount < maxCount);
         return null;
