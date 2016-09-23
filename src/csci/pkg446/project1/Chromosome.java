@@ -60,6 +60,12 @@ public class Chromosome {
         this.points = points;
     }
     
+    @Override
+    public String toString(){
+        return points.toString() + "\nConflicts: " + conflicts + 
+                " nonConflictNodes: " + nonConflictNodes + "\n";
+    }
+    
      
     
 }

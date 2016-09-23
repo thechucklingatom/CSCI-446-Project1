@@ -42,6 +42,10 @@ public class LocalSearch extends Algorithm {
         for(rounds = 0; !graphColored() && rounds < 1000; rounds++) {
             runTournament();
             breed();
+            
+            if(rounds % 50 == 0){
+                System.out.println(population.toString());
+            }
         }
         
         if(graphColored()){
