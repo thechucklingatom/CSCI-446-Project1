@@ -11,7 +11,11 @@ public class Driver {
         
         LocalSearch ls = new LocalSearch();
         
-        ls.SolveGraph(g.getGraph());
+        int i = 0;
+        while(i < 1000){
+            ls.SolveGraph(g.getGraph());
+            g.generateNewGraph(i + 7);
+        }
         
     }
 }
