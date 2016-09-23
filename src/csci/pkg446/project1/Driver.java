@@ -28,6 +28,7 @@ public class Driver {
             Graph toSolve = g.generateNewGraph(i);
             System.out.println(toSolve.toString());
             for(Algorithm a : algorithmList){
+                System.out.println(a.toString());
                 Graph solution = a.SolveGraph(toSolve);
                 if(solution != null){
                     System.out.println("The solution graph is:\n" + solution.toString());
