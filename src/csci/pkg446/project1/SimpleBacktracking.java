@@ -80,7 +80,7 @@ public class SimpleBacktracking extends Backtracking {
                     Graph answer = dfs(numC);
                     if (answer != null) {
                         return answer;
-                    }
+                    }   
                     
                 }
                 System.out.println("Conflict detected. Try the next color.");
@@ -97,7 +97,7 @@ public class SimpleBacktracking extends Backtracking {
 
     private boolean isSolved() {
         for (Point curPoint : points) {
-            if (curPoint.c().equals("COLORLESS")) {
+            if (curPoint.c().equals("Colorless")) {
                 return false;
             }
         }
