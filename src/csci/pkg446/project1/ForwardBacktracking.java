@@ -23,6 +23,7 @@ public class ForwardBacktracking extends Backtracking{
     private ArrayList<Integer>[] domainList;
     private Stack<Integer>[] lastColor;
     private boolean[] isDone;
+    private int comparisons;
 
     @Override
     public Graph SolveGraph(Graph graphToSolve) {
@@ -34,9 +35,13 @@ public class ForwardBacktracking extends Backtracking{
         Graph answer = dfs(3);
         if (answer == null) {
             initiateForward(4);
-            return dfs(4);
+            System.out.println("This answer took " + comparisons + " assignments.");
+            //return dfs(4);
         }
-        return answer;
+        if(isSolved()){
+            System.out.println("This answer took " + comparisons + " assignments.");
+            return answer;
+        } return null;
     }
 
 
@@ -51,26 +56,35 @@ public class ForwardBacktracking extends Backtracking{
             }
         } else {
             //iterate through the colors
+            printDomain(index);
             for (int i = 0; i < numC; i++) {
-                if(checkDomain(index)){
-                    switch (i) {
-                        case 0:
-                            curPoint.setColor("RED");
-                            break;
-                        case 1:
-                            curPoint.setColor("GREEN");
-                            break;
-                        case 2:
-                            curPoint.setColor("BLUE");
-                            break;
-                        case 3:
-                            curPoint.setColor("YELLOW");
-                            break;
-                        default:
-                            curPoint.setColor("COLORLESS");
+                
+                if(checkDomain(i)){
+                    if(!isDone[index]){
+                        switch (i) {
+                            case 0:
+                                curPoint.setColor("RED");
+                                System.out.println("Point at index " + index + " assigned " + "RED.");
+                                break;
+                            case 1:
+                                curPoint.setColor("GREEN");
+                                System.out.println("Point at index " + index + " assigned " + "GREEN.");
+                                break;
+                            case 2:
+                                curPoint.setColor("BLUE");
+                                System.out.println("Point at index " + index + " assigned " + "BLUE.");
+                                break;
+                            case 3:
+                                curPoint.setColor("YELLOW");
+                                System.out.println("Point at index " + index + " assigned " + "YELLOW.");
+                                break;
+                            default:
+                                curPoint.setColor("COLORLESS");
+                        }
                     }
-                    
-                    if (confEdges(curPoint) && forwardCheck(editedNodes, i)) {
+                    comparisons++;
+                    //if (confEdges(curPoint) && forwardCheck(editedNodes, i)) {
+                    if (forwardCheck(editedNodes, i)) {
                         //using this method as an iterator
                         g.getNextPoint();
                         index++;
@@ -79,12 +93,16 @@ public class ForwardBacktracking extends Backtracking{
                             return answer;
                         } 
                     }
+                    System.out.println("Conflict detected. Try the next color.");
                     reverseStep(editedNodes);
+                    isDone[index] = false;
+                    printDomain(index);
                 }
             }
         }
         //</iterate> if we failed to apply a legal color
         curPoint.setColor("COLORLESS");
+        System.out.println("Failure at index " + index + ". Reverted to COLORLESS and going up a call.");
         //using this method as an iterator
         g.getPreviousPoint();
         index--;
@@ -92,8 +110,8 @@ public class ForwardBacktracking extends Backtracking{
     }
 
     private boolean isSolved() {
-        for (Point curPoint : points) {
-            if (curPoint.c().equals("COLORLESS")) {
+        for (Point point : points) {
+            if (point.c().equals("Colorless")) {
                 return false;
             }
         }
@@ -124,7 +142,7 @@ public class ForwardBacktracking extends Backtracking{
         domainList = new ArrayList[points.size()];
         lastColor = new Stack[points.size()];
         isDone = new boolean[points.size()];
-        for(int i = 0; i < numColors; i++){
+        for(int i = 0; i < domainList.length; i++){
             lastColor[i] = new Stack();
             domainList[i] = new ArrayList<>();
             isDone[i] = false;
@@ -144,7 +162,7 @@ public class ForwardBacktracking extends Backtracking{
         for(Edge curEdge : tempEdges){
             //makes sure we grab the correct point on the edge to edit
             Point otherCurPoint;
-            if(curEdge.end().equals(curPoint)){
+            if(curEdge.end() == curPoint){
                 otherCurPoint = curEdge.start();
             } else {
                 otherCurPoint = curEdge.end();
@@ -153,12 +171,17 @@ public class ForwardBacktracking extends Backtracking{
             int otherPointPos = points.indexOf(otherCurPoint);
             //catch if this point has already been assigned a color
             if(isDone[otherPointPos]){
+                System.out.println("    Point " + otherPointPos + " has already been assigned.");
             } else if(domainList[otherPointPos].contains(colorIndex)){
-                if(domainList[otherPointPos].size() - 1 == 0){
+                if((domainList[otherPointPos].size() - 1) == 0){
+                    System.out.println("This coloring leaves a node without color possibilities.");
+                    isDone[index] = false;
                     return false;
                 }
                 //if we reach here, we are conflict free
-                domainList[otherPointPos].remove(colorIndex);
+                Integer temp = (Integer) colorIndex;
+                domainList[otherPointPos].remove(temp);
+                System.out.println("    Point " + otherPointPos + " has had " + temp + " removed.");
                 lastColor[otherPointPos].push(colorIndex);
                 editedNodes.push(otherPointPos);
                 //check if there's one option left
@@ -167,20 +190,27 @@ public class ForwardBacktracking extends Backtracking{
                     switch (colorIndex) {
                         case 0:
                             curPoint.setColor("RED");
+                            System.out.println("    Point " + otherPointPos + " set to RED");
+                            isDone[otherPointPos] = true;
                             break;
                         case 1:
                             curPoint.setColor("GREEN");
+                            System.out.println("    Point " + otherPointPos + " set to GREEN");
+                            isDone[otherPointPos] = true;
                             break;
                         case 2:
                             curPoint.setColor("BLUE");
+                            System.out.println("    Point " + otherPointPos + " set to BLUE");
+                            isDone[otherPointPos] = true;
                             break;
                         case 3:
                             curPoint.setColor("YELLOW");
+                            System.out.println("    Point " + otherPointPos + " set to YELLOW");
+                            isDone[otherPointPos] = true;
                             break;
                         default:
                             curPoint.setColor("COLORLESS");
                     }
-                    isDone[index] = true;
                 }
             }
         }
@@ -195,6 +225,7 @@ public class ForwardBacktracking extends Backtracking{
             } else {
                 int color = lastColor[i].pop();
                 domainList[i].add(color);
+                System.out.println("    Point " + i + " has had " + color + " added.");
             }
         }
     }
@@ -208,5 +239,9 @@ public class ForwardBacktracking extends Backtracking{
         }
         //true means good to go
         return true;
+    }
+    
+    private void printDomain(int tempIndex){
+        System.out.println("Point " + tempIndex + "'s domain is " + domainList[tempIndex]);
     }
 }
