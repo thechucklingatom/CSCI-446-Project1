@@ -36,7 +36,7 @@ public class ForwardBacktracking extends Backtracking{
         if (answer == null) {
             initiateForward(4);
             System.out.println("This answer took " + comparisons + " assignments.");
-            //return dfs(4);
+            return dfs(4);
         }
         if(isSolved()){
             System.out.println("This answer took " + comparisons + " assignments.");
