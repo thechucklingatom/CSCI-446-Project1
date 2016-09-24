@@ -54,15 +54,19 @@ public class SimpleBacktracking extends Backtracking {
                 switch (i) {
                     case 0:
                         curPoint.setColor("RED");
+                        System.out.println("Point at index " + index + " assigned " + "RED.");
                         break;
                     case 1:
                         curPoint.setColor("GREEN");
+                        System.out.println("Point at index " + index + " assigned " + "GREEN.");
                         break;
                     case 2:
                         curPoint.setColor("BLUE");
+                        System.out.println("Point at index " + index + " assigned " + "BLUE.");
                         break;
                     case 3:
                         curPoint.setColor("YELLOW");
+                        System.out.println("Point at index " + index + " assigned " + "YELLOW.");
                         break;
                     default:
                         curPoint.setColor("COLORLESS");
@@ -77,11 +81,14 @@ public class SimpleBacktracking extends Backtracking {
                     if (answer != null) {
                         return answer;
                     }
+                    
                 }
+                System.out.println("Conflict detected. Try the next color.");
             }
         }
         //</iterate> if we failed to apply a legal color
         curPoint.setColor("COLORLESS");
+        System.out.println("Failure at index " + index + ". Reverted to COLORLESS and going up a call.");
         //using this method as an iterator
         g.getPreviousPoint();
         index--;
