@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public class Driver {
     public static void main(String[] args) {        
-        Generator g = new Generator(20);
+        Generator g = new Generator(10);
         
         System.out.println("The graph is:\n" + g.getGraph().toString());
         
@@ -22,24 +22,19 @@ public class Driver {
         
         algorithmList.add(ls);
         algorithmList.add(sb);
-        //algorithmList.add(fb);
+        algorithmList.add(fb);
         algorithmList.add(mc);
         
-        for(int i = 10; i < 100; i+=10){
-            
-            Graph toSolve = g.generateNewGraph(i);
-            //System.out.println(toSolve.toString());
-            for(Algorithm a : algorithmList){
-                System.out.println(a.toString());
-                Graph solution = a.SolveGraph(toSolve);
-                if(solution != null){
-                    System.out.println("The solution graph is:\n" + solution.toString());
-                } else {
-                    System.out.println("Coloring not Found.");
-                }
+        Graph toSolve = g.generateNewGraph(10);
+        //System.out.println(toSolve.toString());
+        for(Algorithm a : algorithmList){
+            System.out.println(a.toString());
+            Graph solution = a.SolveGraph(toSolve);
+            if(solution != null){
+                System.out.println("The solution graph is:\n" + solution.toString());
+            } else {
+                System.out.println("Coloring not Found.");
             }
-            
-        }
-        
+        }  
     }
 }
